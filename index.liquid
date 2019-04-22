@@ -1,0 +1,256 @@
+<div class="Onepage_wrapper">
+{% if section.settings.title != blank %}
+<h1>{{ section.settings.title }}</h1>
+{% endif %}
+{% if section.settings.subtitle != blank %}
+<h2>{{ section.settings.subtitle }}</h2>
+{% endif %}
+{% if section.settings.img_header != blank %}
+  <div class="Onepage_img_header" style="background-image:url({{ section.settings.img_header | img_url: '1600x' }})"><img src="{{ section.settings.img_header | img_url: '1200x' }}" alt="{{ section.settings.img_header.alt | escape }}"></div>
+{% endif %}
+<div class="Onepage_content">
+{% for block in section.blocks %}
+
+{% if block.settings.heading != blank %}
+<h3 class="Onepage_heading">{{ block.settings.heading }}</h3>
+{% endif %}
+
+{% if block.settings.subheading != blank %}
+<h4 class="Onepage_subheading">{{ block.settings.subheading }}</h4>
+{% endif %}
+
+{% if block.settings.content != blank %}
+{{ block.settings.content }}
+{% endif %}
+
+{% if block.settings.quote or block.settings.author != blank %}
+<div class="Onepage_quote">
+  {{ block.settings.quote }}
+  <span>{{ block.settings.author }}</span>
+</div>
+{% endif %}
+
+{% if block.settings.customhtml != blank %}
+  <div class="Onepage_custom">
+  {{ block.settings.customhtml }}
+  </div>
+{% endif %}
+
+{% if block.settings.image != blank %}
+<img src="{{ block.settings.image | img_url: '800x' }}" alt="{{ block.settings.image.alt | escape }}">
+{% endif %}
+
+{% if block.settings.img_table_01 or block.settings.img_table_02 != blank %}
+  <div class="Onepage_image-table">
+    
+    <div>
+        <img src="{{ block.settings.img_table_01 | img_url: '800x' }}" alt="{{ block.settings.img_table_01.alt | escape }}">
+      
+      <p>{{ block.settings.caption_table_01 }}</p>
+    </div>
+    <div>
+   	  <img src="{{ block.settings.img_table_02 | img_url: '800x' }}" alt="{{ block.settings.img_table_02.alt | escape }}">
+      
+      <p>{{ block.settings.caption_table_02 }}</p>
+    </div>
+    
+  </div>
+{% endif %}
+  
+
+  {% if block.settings.member-name or block.settings.member-title or block.settings.member-bio or block.settings.member-image != blank %}
+  <div class="Onepage_member-bio">
+    <div>
+    <img src="{{ block.settings.member-image | img_url: '800x' }}" alt="{{ block.settings.member-image.alt | escape }}">
+    </div>
+    <div>
+   	  <h3 class="Onepage_heading">{{ block.settings.member-name }}</h3>
+      <h4>{{ block.settings.member-title }}</h4>
+      {{ block.settings.member-bio }}
+    </div>
+  </div>
+{% endif %}
+  
+{% if block.settings.endblock %}
+<hr>
+{% endif %}
+
+{% endfor %}
+  
+  </div>
+</div>
+
+
+{% schema %}
+{
+  "name": "One Page",
+"class":"Onepage-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Title"
+    },
+	{
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Subtitle"
+    },
+	{
+	  "type": "image_picker",
+      "id": "img_header",
+      "label": "Header Image"
+	}
+  ],
+  "blocks": [
+	{
+      "type": "headings",
+      "name": "Heading",
+      "settings": [
+		{
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Heading"
+        }
+      ]
+    },
+	{
+      "type": "subheading",
+      "name": "Subheading",
+      "settings": [
+		{
+          "type": "text",
+          "id": "subheading",
+          "label": "Subheading",
+          "default": "Subheading"
+        }
+      ]
+    }, 
+	{
+      "type": "text",
+      "name": "Text",
+      "settings": [
+		{
+          "type": "richtext",
+          "id": "content",
+          "label": "Text",
+          "default": "<p>You can use this element to add a content...</p>"
+        }
+      ]
+    },
+	{
+      "type": "quote",
+      "name": "Quote",
+      "settings": [
+		{
+          "type": "text",
+          "id": "quote",
+          "label": "Quote",
+          "default": "You can quote me on this!"
+        },
+		{
+          "type": "text",
+          "id": "author",
+          "label": "Author",
+          "default": "John Doe"
+        }
+      ]
+    },
+    {
+      "type": "image_caption",
+      "name": "Image Table",
+      "settings": [
+		{
+          "type": "image_picker",
+          "id": "img_table_01",
+          "label": "Image 1"
+		},
+		{
+          "type": "text",
+          "id": "caption_table_01",
+          "label": "Caption 1",
+		  "default": "My Caption"
+        },
+		{
+          "type": "image_picker",
+          "id": "img_table_02",
+          "label": "Image 2"
+		},
+		{
+          "type": "text",
+          "id": "caption_table_02",
+          "label": "Caption 2",
+		  "default": "My Caption"
+        }
+      ]
+    },
+	{
+      "type": "teambio",
+      "name": "Team Member",
+      "settings": [
+		{
+          "type": "image_picker",
+          "id": "member-image",
+          "label": "Member Picture"
+        },
+		{
+          "type": "text",
+          "id": "member-name",
+          "label": "Member Name",
+          "default": "Jane Doe"
+        },
+		{
+          "type": "text",
+          "id": "member-title",
+          "label": "Member Title",
+          "default": "Employee"
+        },
+		{
+          "type": "richtext",
+          "id": "member-bio",
+          "label": "Member Bio",
+"default": "<p>Hey, this is me. I love writing, blog and taking pictures.</p>"
+        }
+      ]
+    },
+    {
+      "type": "html",
+      "name": "Custom HTML",
+      "settings": [
+		{
+          "type": "html",
+          "id": "customhtml",
+          "label": "Custom HTML",
+          "default": "<p>Add custom HTML here!</p>"
+        }
+      ]
+    },
+    {
+      "type": "image",
+      "name": "Images",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+		}
+      ]
+    },
+    {
+      "type": "separator",
+      "name": "Separator",
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "endblock",
+          "label": "Separator On/Off",
+          "default":true
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
