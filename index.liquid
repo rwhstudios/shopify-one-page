@@ -12,42 +12,46 @@
     {% for block in section.blocks %}
     <!-- Headings -->
     {% if block.settings.heading != blank %}
-    <h3 class="Onepage_heading">{{ block.settings.heading }}</h3>
+    <h3 class="Onepage_heading" id="Onepage_heading--{{ block.id }}">{{ block.settings.heading }}</h3>
     {% endif %}
     
     <!-- Subheadings -->
     {% if block.settings.subheading != blank %}
-    <h4 class="Onepage_subheading">{{ block.settings.subheading }}</h4>
+    <h4 class="Onepage_subheading" id="Onepage_heading--{{ block.id }}">{{ block.settings.subheading }}</h4>
     {% endif %}
     
     <!-- Simple content -->
     {% if block.settings.content != blank %}
-    {{ block.settings.content }}
+    <div class="Onepage_content" id="Onepage_content--{{ block.id }}">
+      {{ block.settings.content }}
+    <div>
     {% endif %}
     
     <!-- Quotes with Author -->
     {% if block.settings.quote or block.settings.author != blank %}
-    <div class="Onepage_quote">
+    <div class="Onepage_quote" id="Onepage_quote--{{ block.id }}">
       {{ block.settings.quote }}
-      <span>{{ block.settings.author }}</span>
+      <span class="author">{{ block.settings.author }}</span>
     </div>
     {% endif %}
     
     <!-- Custom HTML -->
     {% if block.settings.customhtml != blank %}
-    <div class="Onepage_custom">
+    <div class="Onepage_custom" id="Onepage_custom--{{ block.id }}">
       {{ block.settings.customhtml }}
     </div>
     {% endif %}
     
     <!-- Large Image -->
     {% if block.settings.image != blank %}
-    <img src="{{ block.settings.image | img_url: '1600x' }}" alt="{{ block.settings.image.alt | escape }}">
+    <div class="Onepage_largeImg" id="Onepage_largeImg--{{ block.id }}">
+      <img src="{{ block.settings.image | img_url: '1600x' }}" alt="{{ block.settings.image.alt | escape }}">
+    </div>
     {% endif %}
     
     <!-- 2 Columns w/ Image and Content -->
     {% if block.settings.img_table_01 or block.settings.img_table_02 != blank %}
-    <div class="Onepage_image-table">
+    <div class="Onepage_image-table" id="Onepage_image-table--{{ block.id }}">
       <div>
         <img src="{{ block.settings.img_table_01 | img_url: '800x' }}" alt="{{ block.settings.img_table_01.alt | escape }}">
         <p>{{ block.settings.caption_table_01 }}</p>
@@ -61,12 +65,12 @@
     
     <!-- 2 Column Member Bio  -->
     {% if block.settings.member-name or block.settings.member-title or block.settings.member-bio or block.settings.member-image != blank %}
-    <div class="Onepage_member-bio">
+    <div class="Onepage_member-bio" id="Onepage_member-bio--{{ block.id }}">
       <div>
         <img src="{{ block.settings.member-image | img_url: '800x' }}" alt="{{ block.settings.member-image.alt | escape }}">
       </div>
       <div>
-        <h3 class="Onepage_heading">{{ block.settings.member-name }}</h3>
+        <h3>{{ block.settings.member-name }}</h3>
         <h4>{{ block.settings.member-title }}</h4>
         {{ block.settings.member-bio }}
       </div>
@@ -85,7 +89,7 @@
 {% schema %}
 {
   "name": "One Page",
-"class":"Onepage-section",
+  "class":"Onepage-section",
   "settings": [
     {
       "type": "text",
@@ -213,7 +217,7 @@
           "type": "richtext",
           "id": "member-bio",
           "label": "Member Bio",
-"default": "<p>Hey, this is me. I love writing, blog and taking pictures.</p>"
+          "default": "<p>Hey, this is me. I love writing, blog and taking pictures.</p>"
         }
       ]
     },
